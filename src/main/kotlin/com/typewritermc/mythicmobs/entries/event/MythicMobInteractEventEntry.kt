@@ -12,6 +12,7 @@ import com.typewritermc.engine.paper.entry.TriggerableEntry
 import com.typewritermc.engine.paper.entry.entries.EventEntry
 import com.typewritermc.engine.paper.entry.startDialogueWithOrNextDialogue
 import io.lumine.mythic.bukkit.events.MythicMobInteractEvent
+import com.typewritermc.mythicmobs.services.MythicMobVisibilityService
 
 @Entry("mythicmobs_interact_event", "MythicMob Interact Event", Colors.YELLOW, "fa6-solid:dragon")
 /**
@@ -32,6 +33,10 @@ class MythicMobInteractEventEntry(
 
 @EntryListener(MythicMobInteractEventEntry::class)
 fun onMythicMobInteractEvent(event: MythicMobInteractEvent, query: Query<MythicMobInteractEventEntry>) {
+    // Only proceed if the player is allowed to see this restricted mob
+    val entity = event.activeMob.entity.bukkitEntity
+    if (entity != null && !MythicMobVisibilityService.isVisibleTo(entity, event.player)) return
+
     query.findWhere {
         it.mobName.toRegex(RegexOption.IGNORE_CASE).matches(event.activeMobType.internalName)
     }.startDialogueWithOrNextDialogue(event.player, context())

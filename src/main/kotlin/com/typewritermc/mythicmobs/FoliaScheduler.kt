@@ -16,7 +16,11 @@ import java.util.logging.Level
  * - Use runAtEntity() for manipulating existing entities
  */
 object FoliaScheduler {
-    private val plugin: Plugin by lazy { Bukkit.getPluginManager().getPlugin("TypeWriter")!! }
+    private val plugin: Plugin by lazy { 
+        Bukkit.getPluginManager().getPlugin("Typewriter") 
+            ?: Bukkit.getPluginManager().getPlugin("TypeWriter")
+            ?: throw IllegalStateException("TypeWriter plugin not found") 
+    }
     private val folia: Boolean by lazy { detectFolia() }
 
     /**
@@ -44,16 +48,20 @@ object FoliaScheduler {
     }
 
     /** Wrapper for Folia's ScheduledTask to avoid NoClassDefFoundError with anonymous classes */
-    private class FoliaTaskWrapper(private val task: io.papermc.paper.threadedregions.scheduler.ScheduledTask) : SchedulerTask {
+    private class FoliaTaskWrapper(private val task: Any) : SchedulerTask {
         override fun cancel() {
-            runCatching { task.cancel() }
+            runCatching { 
+                (task as io.papermc.paper.threadedregions.scheduler.ScheduledTask).cancel() 
+            }
         }
     }
 
     /** Wrapper for Paper's BukkitTask */
-    private class PaperTaskWrapper(private val task: org.bukkit.scheduler.BukkitTask) : SchedulerTask {
+    private class PaperTaskWrapper(private val task: Any) : SchedulerTask {
         override fun cancel() {
-            runCatching { task.cancel() }
+            runCatching { 
+                 (task as org.bukkit.scheduler.BukkitTask).cancel()
+            }
         }
     }
 

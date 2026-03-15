@@ -23,7 +23,6 @@ object MythicMobsExtension : Listener {
         Bukkit.getPluginManager().registerEvents(this, plugin)
         Bukkit.getPluginManager().registerEvents(MythicMobVisibilityService, plugin)
         
-        // Start Spawner Service
-        com.typewritermc.mythicmobs.services.MythicSpawnerService.start(plugin)
+        // Start Spawner Service (Removed: initialized by Koin)
     }
 }

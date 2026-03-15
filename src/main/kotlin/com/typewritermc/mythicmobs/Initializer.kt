@@ -3,15 +3,17 @@ package com.typewritermc.mythicmobs
 import com.typewritermc.core.extension.Initializable
 import com.typewritermc.core.extension.annotations.Singleton
 import com.typewritermc.engine.paper.logger
+import com.typewritermc.mythicmobs.services.MythicMobPacketFilter
 
 @Singleton
 object Initializer : Initializable {
     override suspend fun initialize() {
         logger.info("MythicMobsExtension initialized.")
         MythicMobsExtension.init()
+        MythicMobPacketFilter.register()
     }
 
     override suspend fun shutdown() {
-        // cleanup
+        MythicMobPacketFilter.unregister()
     }
 }
