@@ -6,5 +6,5 @@
     }
 }
 
-rootProject.name = 'MythicMobsExtension'
+rootProject.name = "MythicMobsExtension"
 

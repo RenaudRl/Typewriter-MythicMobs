@@ -130,7 +130,7 @@ object MythicSpawnerService : Initializable, KoinComponent {
             val activeRegion = entry.regions.firstOrNull { region ->
                 val range = region.activationRangeFact.get()?.readForPlayersGroup(player)?.value?.toDouble() ?: region.defaultActivationRange
                 val pos = region.center().coordinateToPosition(PointWorld(player.world.uid.toString()))
-                val dist = pos.distanceSqrt(player.location.toPosition()) ?: Double.MAX_VALUE
+                val dist = pos.distanceSquared(player.location.x, player.location.y, player.location.z)
                 
                 logger.finer("[MythicSpawner] Checking region ${region.center()} - dist: $dist (requires <= ${range * range})")
                 dist <= range * range
@@ -155,8 +155,8 @@ object MythicSpawnerService : Initializable, KoinComponent {
             }
 
             // Read properties
-            val maxMobs = entry.maxMobsFact.get()?.readForPlayersGroup(player)?.value?.toInt() ?: entry.defaultMaxMobs
-            val mobsPerSpawn = entry.mobsPerSpawnFact.get()?.readForPlayersGroup(player)?.value?.toInt() ?: entry.defaultMobsPerSpawn
+            val maxMobs = entry.maxMobsFact.get()?.readForPlayersGroup(player)?.value ?: entry.defaultMaxMobs
+            val mobsPerSpawn = entry.mobsPerSpawnFact.get()?.readForPlayersGroup(player)?.value ?: entry.defaultMobsPerSpawn
             val cooldownTicks = entry.cooldownFact.get()?.readForPlayersGroup(player)?.value?.toLong() ?: entry.defaultCooldown
             val warmupTicks = entry.warmupFact.get()?.readForPlayersGroup(player)?.value?.toLong() ?: entry.defaultWarmup
             

@@ -32,12 +32,13 @@ class MythicMobInteractEventEntry(
 ) : EventEntry
 
 @EntryListener(MythicMobInteractEventEntry::class)
-fun onMythicMobInteractEvent(event: MythicMobInteractEvent, query: Query<MythicMobInteractEventEntry>) {
+fun onMythicMobInteractEvent(event: org.bukkit.event.Event, query: Query<MythicMobInteractEventEntry>) {
+    val mythicEvent = event as? MythicMobInteractEvent ?: return
     // Only proceed if the player is allowed to see this restricted mob
-    val entity = event.activeMob.entity.bukkitEntity
-    if (entity != null && !MythicMobVisibilityService.isVisibleTo(entity, event.player)) return
+    val entity = mythicEvent.activeMob.entity.bukkitEntity
+    if (entity != null && !MythicMobVisibilityService.isVisibleTo(entity, mythicEvent.player)) return
 
     query.findWhere {
-        it.mobName.toRegex(RegexOption.IGNORE_CASE).matches(event.activeMobType.internalName)
-    }.startDialogueWithOrNextDialogue(event.player, context())
+        it.mobName.toRegex(RegexOption.IGNORE_CASE).matches(mythicEvent.activeMobType.internalName)
+    }.startDialogueWithOrNextDialogue(mythicEvent.player, context())
 }
