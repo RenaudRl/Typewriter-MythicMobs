@@ -33,11 +33,10 @@ class MythicMobDeathEventEntry(
 ) : EventEntry
 
 @EntryListener(MythicMobDeathEventEntry::class)
-fun onMobDeath(event: org.bukkit.event.Event, query: Query<MythicMobDeathEventEntry>) {
-    val mythicEvent = event as? MythicMobDeathEvent ?: return
-    val player = mythicEvent.killer as? Player ?: return
+fun onMobDeath(event: MythicMobDeathEvent, query: Query<MythicMobDeathEventEntry>) {
+    val player = event.killer as? Player ?: return
     query.findWhere {
-        it.mobName.toRegex(RegexOption.IGNORE_CASE).matches(mythicEvent.mobType.internalName)
+        it.mobName.toRegex(RegexOption.IGNORE_CASE).matches(event.mobType.internalName)
     }.triggerAllFor(player, context())
 }
 
