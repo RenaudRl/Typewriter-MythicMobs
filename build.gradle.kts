@@ -37,8 +37,5 @@ typewriter {
 }
 
 kotlin {
-    jvmToolchain(25)
-    compilerOptions {
-        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.fromTarget("21"))
-    }
+    jvmToolchain(21)
 }
