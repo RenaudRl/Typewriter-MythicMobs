@@ -111,11 +111,4 @@ object MythicMobPacketFilter : PacketListenerAbstract(PacketListenerPriority.HIG
             logger.log(Level.FINE, "[MythicMobs] Error in packet filter", e)
         }
     }
-
-    private fun checkVisibility(event: PacketSendEvent, entityId: Int, receiverUuid: UUID) {
-        if (!MythicMobVisibilityService.isRestricted(entityId)) return
-        if (!MythicMobVisibilityService.isVisibleTo(entityId, receiverUuid)) {
-            event.isCancelled = true
-        }
-    }
 }

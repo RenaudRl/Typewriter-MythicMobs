@@ -3,7 +3,7 @@ package com.typewritermc.mythicmobs.services
 import com.typewritermc.core.entries.Query
 import com.typewritermc.core.extension.Initializable
 import com.typewritermc.core.extension.annotations.Singleton
-import com.typewritermc.core.utils.point.distanceSqrt
+import com.typewritermc.core.utils.point.distanceSquared
 import com.typewritermc.core.utils.point.toPosition as coordinateToPosition
 import com.typewritermc.core.utils.point.World as PointWorld
 import com.typewritermc.engine.paper.entry.matches

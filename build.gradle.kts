@@ -9,14 +9,17 @@ repositories {
     maven("https://maven.typewritermc.com/beta/")
     maven("https://maven.typewritermc.com/external/")
     maven("https://mvn.lumine.io/repository/maven-public/")
+    maven("https://repo.codemc.io/repository/maven-public/")
 }
 
 dependencies {
-    compileOnly("io.lumine:Mythic-Dist:5.6.0")
+    compileOnly("io.lumine:Mythic-Dist:5.11.2")
+    compileOnly("com.typewritermc:QuestExtension:0.9.0")
+    compileOnly("com.typewritermc:BasicExtension:0.9.0")
 }
 
 group = "btcrenaud"
-version = "0.0.5"
+version = "0.0.7"
 
 typewriter {
     namespace = "btcrenaud"
@@ -24,15 +27,18 @@ typewriter {
         name = "MythicMobs"
         shortDescription = "MythicMobs extension for Typewriter"
         description = "A comprehensive TypeWriter extension providing advanced gameplay features for Minecraft servers on Paper 1.21+. Fully compatible with the official TypeWriter engine and PlaceholderAPI."
-        engineVersion = "0.9.0-beta-174"
+        engineVersion = "0.9.0-beta-175"
         channel = com.typewritermc.moduleplugin.ReleaseChannel.BETA
         paper()
+        dependencies {
+            dependency("typewritermc", "Quest")
+        }
     }
 }
 
-    
-
 kotlin {
     jvmToolchain(25)
-    
+    compilerOptions {
+        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.fromTarget("21"))
+    }
 }
