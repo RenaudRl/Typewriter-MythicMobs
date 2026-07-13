@@ -19,7 +19,7 @@ dependencies {
 }
 
 group = "btcrenaud"
-version = "0.0.7"
+version = "0.0.8"
 
 typewriter {
     namespace = "btcrenaud"
