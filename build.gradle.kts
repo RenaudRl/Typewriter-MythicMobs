@@ -1,6 +1,6 @@
 plugins {
-    kotlin("jvm") version "2.3.20"
-    id("com.typewritermc.module-plugin") version "2.1.0"
+    kotlin("jvm") version "2.2.10"
+    id("com.typewritermc.module-plugin") version "2.2.0"
 }
 
 repositories {
@@ -19,7 +19,7 @@ dependencies {
 }
 
 group = "btcrenaud"
-version = "0.0.8"
+version = "0.0.9"
 
 typewriter {
     namespace = "btcrenaud"
@@ -27,7 +27,7 @@ typewriter {
         name = "MythicMobs"
         shortDescription = "MythicMobs extension for Typewriter"
         description = "A comprehensive TypeWriter extension providing advanced gameplay features for Minecraft servers on Paper 1.21+. Fully compatible with the official TypeWriter engine and PlaceholderAPI."
-        engineVersion = "0.9.0-beta-175"
+        engineVersion = "0.9.0-beta-176"
         channel = com.typewritermc.moduleplugin.ReleaseChannel.BETA
         paper()
         dependencies {
