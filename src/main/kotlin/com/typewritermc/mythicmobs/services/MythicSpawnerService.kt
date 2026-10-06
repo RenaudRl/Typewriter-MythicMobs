@@ -32,6 +32,7 @@ object MythicSpawnerService : Initializable, KoinComponent {
     private val lastSpawnTimes = ConcurrentHashMap<String, Long>()
     private val warmupStartTimes = ConcurrentHashMap<String, Long>()
     private val lastActiveTimes = ConcurrentHashMap<String, Long>()
+    private val groupStates = GroupStateRegistry()
 
     private var spawnerTask: Any? = null
     private var isRunning = false
@@ -96,9 +97,21 @@ object MythicSpawnerService : Initializable, KoinComponent {
         lastSpawnTimes.clear()
         warmupStartTimes.clear()
         lastActiveTimes.clear()
+        groupStates.clear()
+    }
+
+    /** Drops the state of groups that have no member online any more (disconnect, empty group). */
+    private fun purgeAbandonedGroups() {
+        val online = server.onlinePlayers.mapTo(HashSet()) { it.uniqueId }
+        for (key in groupStates.release(online)) {
+            lastSpawnTimes.remove(key)
+            warmupStartTimes.remove(key)
+            lastActiveTimes.remove(key)
+        }
     }
 
     private fun tick() {
+        purgeAbandonedGroups()
         val spawners = Query.find<MythicSpawnerEntry>().toList()
         if (spawners.isEmpty()) return
 
@@ -131,6 +144,7 @@ object MythicSpawnerService : Initializable, KoinComponent {
                 continue
             }
             val uniqueKey = spawnerStateKey(player.world.name, entry.id, groupId?.id)
+            if (groupId != null) groupStates.record(uniqueKey, player.uniqueId)
             logger.finer("[MythicSpawner] Checking spawner ${entry.id} for player ${player.name}")
 
             val activeRegion = entry.regions.firstOrNull { region ->
