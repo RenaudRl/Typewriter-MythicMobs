@@ -124,7 +124,13 @@ object MythicSpawnerService : Initializable, KoinComponent {
         val currentTime = System.currentTimeMillis()
 
         for (entry in spawners) {
-            val uniqueKey = "${player.world.name}_${entry.id}"
+            // With a group set, only its members activate the spawner and each group runs its own cycle.
+            val groupEntry = entry.group.get()
+            val groupId = if (groupEntry == null) null else groupEntry.groupId(player) ?: run {
+                logger.finer("[MythicSpawner] Player ${player.name} is in no group of spawner ${entry.id}")
+                continue
+            }
+            val uniqueKey = spawnerStateKey(player.world.name, entry.id, groupId?.id)
             logger.finer("[MythicSpawner] Checking spawner ${entry.id} for player ${player.name}")
 
             val activeRegion = entry.regions.firstOrNull { region ->
@@ -147,7 +153,8 @@ object MythicSpawnerService : Initializable, KoinComponent {
                 val criteriaRange = (activeRegion.activationRangeFact.get()?.readForPlayersGroup(player)?.value?.toDouble() ?: activeRegion.defaultActivationRange) + 5.0
                 val eligiblePlayers = player.world.getNearbyEntities(centerLoc, criteriaRange, criteriaRange, criteriaRange)
                     .filterIsInstance<Player>()
-                
+                    .filter { groupEntry == null || groupEntry.groupId(it) == groupId }
+
                 if (eligiblePlayers.none { entry.criteria.matches(it) }) {
                     logger.finer("[MythicSpawner] Criteria check failed for all eligible nearby players for spawner ${entry.id}")
                     continue

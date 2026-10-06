@@ -16,6 +16,7 @@ dependencies {
     compileOnly("io.lumine:Mythic-Dist:5.11.2")
     compileOnly("com.typewritermc:QuestExtension:0.9.0")
     compileOnly("com.typewritermc:BasicExtension:0.9.0")
+    testImplementation(kotlin("test"))
 }
 
 group = "btcrenaud"

@@ -77,7 +77,7 @@ class MythicSpawnerEntry(
     @Help("Fallback warmup time in ticks if fact is not set")
     val defaultWarmup: Long = 0L,
     
-    @Help("The group used to filter players and read facts from. If not set, uses the player directly.")
+    @Help("Optional group. If set, only its members activate this spawner, the criteria are checked on members of the same group, and each group has its own warmup and cooldown. If not set, every player counts. Facts are still read through their own group.")
     val group: Ref<GroupEntry> = emptyRef(),
 
     @Help("The criteria that must be met by at least one nearby player for the spawner to be active")
