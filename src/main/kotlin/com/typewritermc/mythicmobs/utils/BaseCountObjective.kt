@@ -28,14 +28,19 @@ import java.util.concurrent.ConcurrentHashMap
 import kotlin.math.absoluteValue
 import com.typewritermc.engine.paper.entry.Criteria
 
+// Player-facing format of count objectives, editable in snippets.yml. The keys are shared with the other
+// BTC objective extensions on purpose: one edit restyles every count objective.
 private val displaySnippet by snippet(
     "advancedQuest.display",
-    "<display> <dark_gray>(<gray><current><dark_gray>/<gray><required><dark_gray>)"
+    "<display> <dark_gray>(<gray><current><dark_gray>/<gray><required><dark_gray>)",
+    "Count objective line while in progress. Placeholders: <display> (the objective display text), " +
+        "<current> (current count), <required> (required amount). PlaceholderAPI placeholders are also parsed."
 )
 
 private val completedDisplaySnippet by snippet(
     "advancedQuest.completed",
-    "<green>✔</green> <st><display></st> <dark_gray>(<gray><current><dark_gray>/<gray><required><dark_gray>)"
+    "<green>✔</green> <st><display></st> <dark_gray>(<gray><current><dark_gray>/<gray><required><dark_gray>)",
+    "Count objective line once the required amount is reached. Placeholders: <display>, <current>, <required>."
 )
 
 interface BaseCountObjectiveEntry : ObjectiveEntry {
