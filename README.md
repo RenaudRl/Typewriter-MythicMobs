@@ -1,76 +1,72 @@
 # MythicMobs Extension
 
 ![Java Version](https://img.shields.io/badge/Java-21-orange)
-![Build Status](https://img.shields.io/badge/build-passing-brightgreen)
-![Target](https://img.shields.io/badge/Target-Paper%20/%20Folia%20/%20BTC--CORE-blue)
+![Target](https://img.shields.io/badge/Target-Paper-blue)
+![Typewriter](https://img.shields.io/badge/Typewriter-0.9.0--beta--177-purple)
 
-**MythicMobs Extension** is a powerful integration module for **TypeWriter**, designed for **BTC Studio** infrastructure. It bridges the gap between TypeWriter's action system and the MythicMobs engine, allowing for deep interaction with custom mobs and skills.
+**MythicMobs Extension** connects **Typewriter** to the MythicMobs plugin: spawn mobs, cast skills, react to kills, and build kill objectives and region spawners from the web editor.
 
 ---
 
 ## 🚀 Key Features
 
-### ⚔️ Action System
-- **Spawn Mob**: Programmatically spawn MythicMobs at specific locations.
-- **Despawn Mob**: Efficiently remove MythicMobs from the world.
-- **Execute Skill**: Trigger complex MythicMobs skills through TypeWriter actions.
-
-### 🎭 Events & Interactions
-- **Death Events**: React to MythicMob deaths.
-- **Kill Events**: Detect and process when a player is killed by a MythicMob.
-- **Interactions**: Handle player-to-mob interaction events seamlessly.
-- **Region Spawner**: Set MythicMobs to spawn in defined regions(corners).
-
-### 📊 Facts & Placeholders
-- **Faction Tracking**: Check mob factions for conditioned logic.
-- **Leveling**: Integrate with MythicMob levels.
-- **Stance System**: Read and react to mob stances.
-- **Mob Counters**: Monitor the count of specific mobs in given areas.
-
-### 🎬 Cinematics
-- **MythicMob Cinematics**: Use MythicMobs as actors in TypeWriter cinematic sequences.
-- **Skill Cinematics**: Synchronize complex skill executions with cinematic timing.
+- **Actions**: spawn a MythicMobs mob, despawn it, execute a MythicMobs skill.
+- **Events**: a player kills a MythicMobs mob, a player interacts with one, a MythicMobs mob kills a player.
+- **Facts**: faction, level and stance of a mob, and the count of active mobs of a type.
+- **Cinematics**: spawn a MythicMob or trigger a MythicSkill during a cinematic.
+- **Objective**: kill MythicMobs mobs (needs the Quest extension).
+- **Region spawner** (`mythic_spawner`): spawns a mob in regions defined by two corners, with max mobs, mobs per cycle, cooldown and warmup (fixed values or facts), a player activation range and `criteria`. The optional `group` limits activation to members of that group: the criteria are checked on that group, and each group has its own warmup and cooldown.
 
 ---
 
-## ⚙️ Configuration
+## 📦 Entries
 
-The MythicMobs Extension configuration is managed through TypeWriter's manifest system. It requires the MythicMobs plugin to be present on the server.
+| Category | Entries |
+|---|---|
+| Actions | `spawn_mythicmobs_mob`, `despawn_mythicmobs_mob`, `execute_mythicmob_skill` |
+| Events | `on_mythic_mob_die`, `mythicmobs_interact_event`, `mythicmobs_kill_player_event` |
+| Facts | `mythic_mob_count_fact`, `mythicmob_faction`, `mythicmob_level`, `mythicmob_stance` |
+| Cinematics | `mythicmob_cinematic`, `mythicskill_cinematic` |
+| Objective | `mythicmob_kill_objective` |
+| Static | `mythic_spawner` |
 
-## 🛠 Building & Deployment
+Full field reference on the [wiki](https://docs.borntocraftstudio.net/extensions/free/mythicmobs/).
+
+---
+
+## 🧩 Requirements
+
+- Typewriter engine `0.9.0-beta-177`, on **Paper**.
+- **MythicMobs** plugin (API 5.11.2 at build time).
+- Typewriter **Quest** extension.
+
+---
+
+## 🛠 Building
 
 Requires **Java 21**.
 
 ```bash
-# Clone the repository
 git clone https://github.com/RenaudRl/Typewriter-MythicMobs.git
 cd Typewriter-MythicMobs
-
-# Build the project
 ./gradlew clean build
 ```
 
-### Artifact Locations:
-- `build/libs/Typewriter-MythicMobs-[Version].jar`
+Artifact: `build/libs/`.
 
 ---
 
-## 🤝 Credits & Inspiration
-- **[TypeWriter](https://github.com/gabber235/Typewriter)** - The engine this extension is built for.
-- **[BTC Studio](https://github.com/RenaudRl)** - Maintenance and specialized optimizations.
+## 🤝 Credits
+- **[Typewriter](https://github.com/gabber235/Typewriter)**: the engine this extension is built for.
+- **[BTC Studio](https://github.com/RenaudRl)**: maintenance.
+
+## Documentation
+
+[BTC Studio Docs](https://docs.borntocraftstudio.net/extensions/free/mythicmobs/)
 
 ---
 
 ## 📜 License
-Licensed under the **MIT License**.
-
-## Documentation
-
-Full documentation available at [BTC Studio Docs](https://docs.borntocraftstudio.net/extensions/free/mythicmobs/).
-
----
-
-## 📜 Licence
 
 **GNU General Public License v3.0 or later** — [LICENSE](LICENSE) — with a
 **linking exception** for the Typewriter engine — [LICENSE-EXCEPTION.md](LICENSE-EXCEPTION.md).
